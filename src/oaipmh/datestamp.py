@@ -2,6 +2,8 @@ import datetime
 from oaipmh.error import DatestampError
 
 def datetime_to_datestamp(dt, day_granularity=False):
+    if isinstance(dt, str):
+        return dt
     assert dt.tzinfo is None # only accept timezone naive datetimes
     # ignore microseconds
     dt = dt.replace(microsecond=0)
