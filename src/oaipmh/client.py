@@ -370,8 +370,9 @@ def buildHeader(header_node, namespaces):
     e = etree.XPathEvaluator(header_node,
                             namespaces=namespaces).evaluate
     identifier = e('string(oai:identifier/text())')
-    datestamp = datestamp_to_datetime(
-        str(e('string(oai:datestamp/text())')))
+    datestamp = str(e('string(oai:datestamp/text())'))
+    if datestamp != '':
+        datestamp = datestamp_to_datetime(datestamp)
     setspec = [str(s) for s in e('oai:setSpec/text()')]
     deleted = e("@status = 'deleted'")
     return common.Header(header_node, identifier, datestamp, setspec, deleted)
